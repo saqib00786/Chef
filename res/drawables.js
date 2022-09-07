@@ -1,0 +1,1 @@
+export const FONT_SACRAMENTO = require('../assets/fonts/Sacramento-Regular.ttf')
