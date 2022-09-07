@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 const ApiScreen = () => {
 
-    const [data, setData] = useState()
+    const [data, setData] = useState([])
     const [loading, isLoading] = useState(true)
 
     useEffect(() => {
@@ -13,8 +13,8 @@ const ApiScreen = () => {
 
     const getJsonData = async () => {
         try {
-            const responce = await fetch("https://jsonplaceholder.typicode.com/photos")
-            const responceJson = await responce.json()
+            const response = await fetch('https://fakestoreapi.com/products')
+            let responceJson = await response.clone().json()
             setData(responceJson)
             isLoading(false)
         } catch (error) {
@@ -27,8 +27,8 @@ const ApiScreen = () => {
         <View style={{ flex: 1, padding: 12 }}>
 
             {loading ? <ActivityIndicator /> :
-                <View style={{flex : 1}}>
-                <Text style={{ alignSelf: 'center', fontWeight: '800', fontSize: 24 }}>API DATA LIST</Text>
+                <View style={{ flex: 1 }}>
+                    <Text style={{ alignSelf: 'center', fontWeight: '800', fontSize: 24 }}>API DATA LIST</Text>
                     <FlatList
                         data={data}
                         renderItem={({ item }) => {
@@ -36,7 +36,7 @@ const ApiScreen = () => {
                                 <View style={styles.itemContainer}>
                                     <View style={{ flex: 0.3 }}>
                                         <Image
-                                            source={{ uri: item.url }}
+                                            source={{ uri: item.image }}
                                             style={{ width: "100%", height: "100%", resizeMode: "cover" }}
                                         />
 
