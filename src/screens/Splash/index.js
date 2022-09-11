@@ -10,7 +10,7 @@ import AnimatedLottieView from 'lottie-react-native';
 const Splash = (props) => {
 
     setTimeout(() => {
-        props.navigation.navigate('Detail')
+        props.navigation.navigate('Main')
     }, 3000)
 
     let [fontsLoaded] = useFonts({

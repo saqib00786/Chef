@@ -1,47 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, FlatList, SectionList } from "react-native";
-import React from "react";
 
 const Main = (props) => {
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        getUserData()
+    }, [])
+
+
+    const getUserData = async () => {
+        try {
+            const res = await fetch("https://github.com/uc?export=view&id=ec83ee9c4802e993d59e890a95420cc2f0dfe897/users.json")
+            const mydata = await res.json()
+            setData(mydata)
+            console.log(mydata)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
-        <>
-            <View style={styles.header}>
-                <Text style={styles.text}>Chef</Text>
-            </View>
-            <View>
-                <SectionList
-                    sections={[
-                        {
-                            title: "Pakistani Food Recipes",
-                            data: [
-                                "Recipe 1",
-                                "Recipe 2",
-                                "Recipe 3",
-                                "Recipe 4",
-                                "Recipe 5",
-                            ],
-                        },
-                        {
-                            title: "Indian Food Recipes",
-                            data: [
-                                "Recipe 1",
-                                "Recipe 2",
-                                "Recipe 3",
-                                "Recipe 4",
-                                "Recipe 5",
-                            ],
-                        },
-                    ]}
-                    renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
-                    renderSectionHeader={({ section }) => (
-                        <Text style={styles.subheading1}>{section.title}</Text>
-                    )}
-                    keyExtractor={(item, index) =>
-                        `basicListEntry-${item.title + Math.random().toString()}`
-                    }
-                />
-            </View>
-        </>
+        <View style={{ flex: 1 }}>
+            <FlatList
+            data={data}
+            renderItem = {({item})=>{
+                <Text>{item.name}</Text>
+            }}
+            />
+        </View>
     );
 };
 
