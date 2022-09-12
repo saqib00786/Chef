@@ -83,12 +83,6 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: COLOR_DARK_BROWN
     },
-    ing_img: {
-        marginTop: 15,
-        height: 100,
-        width: 100,
-        borderRadius: 100
-    },
     card: {
         margin: 5,
         width: 95,

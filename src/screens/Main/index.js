@@ -1,73 +1,113 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, FlatList, SectionList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from "react-native";
+import * as SplashScreen from 'expo-splash-screen';
+import { COLOR_DARK_BROWN, COLOR_EQUA_LIGHT_RED, COLOR_EQUA_RED, COLOR_LIGHT_RED, COLOR_REDISH, FONT_ACUMIN, FONT_ACUMIN_BOLD, FONT_SACRAMENTO, SPLASHSCR_ICON } from '../../../res/drawables'
+import { useFonts } from 'expo-font'
+import { useCallback } from 'react';
 
 const Main = (props) => {
-    const [data, setData] = useState([])
+    const [data, setData] = useState()
+    const [fontsLoaded] = useFonts({
+        'Sacramento-Regular': FONT_SACRAMENTO,
+        'Acumin-Normal': FONT_ACUMIN,
+        'Acumin-bold': FONT_ACUMIN_BOLD
+    })
 
     useEffect(() => {
         getUserData()
+
     }, [])
 
 
     const getUserData = async () => {
         try {
-            const res = await fetch("https://github.com/uc?export=view&id=ec83ee9c4802e993d59e890a95420cc2f0dfe897/users.json")
+            const res = await fetch('https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood')
             const mydata = await res.json()
-            setData(mydata)
-            console.log(mydata)
-
+            setData(mydata.meals)
         } catch (error) {
             console.log(error)
         }
     }
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={styles.mainContainer}>
             <FlatList
-            data={data}
-            renderItem = {({item})=>{
-                <Text>{item.name}</Text>
-            }}
+                ListHeaderComponent={<View>
+                    <Text style={{ fontSize: 80, fontFamily: 'Sacramento-Regular',color : 'white' }}>Chef</Text>
+
+                </View>}
+                ListHeaderComponentStyle={styles.header}
+                data={data}
+                renderItem={({ item }) => {
+                    return (
+                        <TouchableOpacity style={styles.cardContainer}>
+                            <View style={styles.imgContainer}>
+                                <Image
+                                    source={{ uri: item.strMealThumb }}
+                                    style={styles.img}
+                                />
+                            </View>
+                            <View style={{ flex: 0.7 }}>
+                                <Text>{item.idMeal}</Text>
+                                <Text>{item.strMeal}</Text>
+                            </View>
+
+
+                        </TouchableOpacity>
+                    )
+                }}
             />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    header: {
+    mainContainer: {
         width: "100%",
-        height: "30%",
-        backgroundColor: "#00ffff",
-        alignItems: "center",
-        justifyContent: "center",
+        flex: 1,
+        padding: 16
     },
-    text: {
-        color: "white",
-        fontSize: 50,
-        fontWeight: "bold",
+    cardContainer: {
+        width: "95%",
+        height: 100,
+        borderRadius: 16,
+        backgroundColor: '#ffffff',
+        shadowColor: "#000",
+        margin: 8,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        display: 'flex',
+        flexDirection: 'row',
+        borderColor: COLOR_EQUA_RED,
+        borderWidth: 0.6,
     },
-    subheading1: {
-        marginHorizontal: 18,
-        marginTop: 10,
-        padding: 10,
-        borderWidth: 2,
-        borderColor: "black",
-        borderRadius: 14,
-        backgroundColor: "#708090",
+    imgContainer: {
+        flex: 0.3,
+        borderTopStartRadius: 16,
+        borderBottomStartRadius: 16,
+        padding: 2
+
     },
-    text1: {
-        color: "#ffffff",
+    img: {
+        width: "100%",
+        height: "100%",
+        borderBottomLeftRadius: 16,
+        borderTopLeftRadius: 16
     },
-    item: {
-        marginHorizontal: 18,
-        marginTop: 3,
-        padding: 10,
-        borderWidth: 2,
-        borderColor: "black",
-        borderRadius: 14,
-        backgroundColor: "#00ffff",
-        color: "#ffffff",
-    },
+    header: {
+        width: '100%',
+        height: 250,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: COLOR_EQUA_RED,
+        borderBottomEndRadius : 16,
+        borderBottomStartRadius : 16
+    }
 });
 
 export default Main

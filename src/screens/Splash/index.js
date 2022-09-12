@@ -13,7 +13,7 @@ const Splash = (props) => {
         props.navigation.navigate('Main')
     }, 3000)
 
-    let [fontsLoaded] = useFonts({
+    const [fontsLoaded] = useFonts({
         'Sacramento-Regular': FONT_SACRAMENTO,
         'Acumin-Normal': FONT_ACUMIN,
         'Acumin-bold': FONT_ACUMIN_BOLD
