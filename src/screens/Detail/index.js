@@ -8,8 +8,7 @@ const Detail = (props) => {
         <View style={styles.container}>
             <Image
                 style={styles.img}
-                source={{uri : 'https://drive.google.com/uc?export=view&id=1BOolG3mLsmbQFu7Cvh0kDIvCYCOo5YuL'}}
-            />
+                source={require( '../../../assets/rice.png')}/>
 
             <Text style={[styles.instructions_text, { fontWeight: 'bold', fontSize: 18, color: COLOR_DARK_BROWN }]}>Prepration Method:</Text>
 
