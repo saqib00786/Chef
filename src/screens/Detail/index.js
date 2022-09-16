@@ -1,73 +1,100 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native';
-import { COLOR_DARK_BROWN, COLOR_EQUA_RED, COLOR_LIGHT_RED, COLOR_REDISH, CONTACTUS_BTN, CONTACTUS_ICON } from '../../../res/drawables';
+import React, { useEffect, useState } from 'react'
+import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import { COLOR_DarkGray, COLOR_LIGHT_GRAY, COLOR_ORANGE, COLOR_WHITE, CONTACTUS_ICON } from '../../../res/drawables';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
-
+setStatusBarBackgroundColor(COLOR_DarkGray)
 const Detail = (props) => {
+
+    const { Id } = props.route.params
+    const [data, setData] = useState([])
+
+
+    useEffect(() => {
+        getUserData()
+    }, [])
+
+    const getUserData = async () => {
+        try {
+            const res = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${Id}`)
+            const mydata = await res.json()
+            setData(mydata.meals[0])
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
-        <View style={styles.container}>
-            <Image
-                style={styles.img}
-                source={require( '../../../assets/rice.png')}/>
-
-            <Text style={[styles.instructions_text, { fontWeight: 'bold', fontSize: 18, color: COLOR_DARK_BROWN }]}>Prepration Method:</Text>
-
-            <Text style={styles.instructions_text}>
-                Step 1: Prepare the chicken curry. Prepare the biryani masala (or use store-bought) and marinate the chicken.
-                Cook the chicken curry. While it’s cooking over low heat, prepare the rice.
-                Step 2: Parboil the rice.
-                Bring a pot of water to a boil and parboil the rice. Drain and set aside.
-                Step 3: Bring it all together for a final steam (‘dum‘).
-                Layer half of the rice, all of the chicken, and then the remaining rice on top.
-                Add the finishing touches.
-                Allow steam to develop, then lower the heat and let the flavors meld.
-            </Text>
-            <Text style={[styles.instructions_text, { fontWeight: 'bold', fontSize: 18, color: COLOR_DARK_BROWN }]}>Ingredients:</Text>
-
-
-            <FlatList
-                data={[["ali", "1Kg"], ["ahmed", "2Kg"], ["saba", "8kg"], ["saqib", "1kg"], ['abaid', "8kg"], ['asia', '10kg'], ['haris', '1kg']]}
-                numColumns={1}
-                horizontal={true}
-                renderItem={({ item }) => {
-                    return (
-                        <View style={styles.card}>
-                            <View style={styles.corner_view}>
-                            </View>
-
-                            <View style={styles.imgContainer}>
-                                <Image
-                                    style={{ width: 60, height: 60, borderRadius: 100 }}
-                                    source={require('../../../assets/rice.png')}
-                                />
-                                <Text>{item[0]}</Text>
-                                <Text>{item[1]}</Text>
-                            </View>
-
-                            <View style={styles.corner_view_bottom}>
-                            </View>
-
-                        </View>
-                    )
-                }}
-            />
-
-            <TouchableOpacity
-                style={styles.contactUs}
-                onPress={() => { props.navigation.navigate('Contact') }}
-            >
+            <View style={styles.container}>
                 <Image
-                    source={CONTACTUS_ICON}
-                    style={{ height: 40, width: 40 }}
+                    style={styles.img}
+                    source={{ uri: data.strMealThumb }} />
+
+                <Text style={[styles.instructions_text, { fontWeight: 'bold', fontSize: 18, color: COLOR_WHITE }]}>Prepration Method:</Text>
+                <ScrollView 
+                showsVerticalScrollIndicator={true}
+                indicatorStyle='white'
+                style={{ height: '15%' }}>
+                    <Text style={styles.instructions_text}>{data.strInstructions}</Text>
+                </ScrollView>
+                <Text style={[styles.instructions_text, { fontWeight: 'bold', fontSize: 18, color: COLOR_WHITE }]}>Ingredients:</Text>
+
+
+                <FlatList
+                    data={[[data.strIngredient1, data.strMeasure1], [data.strIngredient2, data.strMeasure2], [data.strIngredient3, data.strMeasure3],
+                    [data.strIngredient4, data.strMeasure4], [data.strIngredient5, data.strMeasure5], [data.strIngredient6, data.strMeasure6],
+                    [data.strIngredient1, data.strMeasure1], [data.strIngredient1, data.strMeasure1], [data.strIngredient1, data.strMeasure1],
+                    [data.strIngredient7, data.strMeasure7], [data.strIngredient8, data.strMeasure8], [data.strIngredient9, data.strMeasure9],
+                    [data.strIngredient10, data.strMeasure10], [data.strIngredient11, data.strMeasure11], [data.strIngredient12, data.strMeasure12]]}
+                    numColumns={1}
+                    horizontal={true}
+                    renderItem={({ item }) => {
+                        return (
+                            <View style={styles.card}>
+                                <View style={styles.corner_view}>
+                                </View>
+
+                                <View style={styles.imgContainer}>
+                                    <Image
+                                        style={{ width: 60, height: 60, borderRadius: 100 }}
+                                        source={require('../../../assets/ingredients.png')}
+                                    />
+                                    <Text style={{ color: COLOR_WHITE, fontFamily: "Acumin-bold",fontSize:12 }}>{item[0]}</Text>
+                                    <Text style={{ color: COLOR_WHITE }}>{item[1]}</Text>
+                                </View>
+
+                                <View style={styles.corner_view_bottom}>
+                                </View>
+
+                            </View>
+                        )
+                    }}
                 />
-            </TouchableOpacity>
-        </View>
+
+                <TouchableOpacity
+                    style={styles.contactUs}
+                    onPress={() => { props.navigation.navigate('Contact') }}>
+                    <Image
+                        source={CONTACTUS_ICON}
+                        style={{ height: 40, width: 40}}
+                    />
+                </TouchableOpacity>
+
+                <View style={{ width: '100%', height: 70, position: 'absolute', bottom: 0, zIndex: -1 }}>
+                    <BannerAd
+                        unitId={TestIds.BANNER}
+                        size={BannerAdSize.FULL_BANNER}
+                    />
+                </View>
+            </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: COLOR_DarkGray
     },
     img: {
         height: 250,
@@ -80,13 +107,13 @@ const styles = StyleSheet.create({
         marginBottom: 4,
         textAlign: "justify",
         fontWeight: '500',
-        color: COLOR_DARK_BROWN
+        color: COLOR_WHITE
     },
     card: {
         margin: 5,
-        width: 95,
+        width: 100,
         height: 120,
-        backgroundColor: '#ffffff',
+        backgroundColor: COLOR_LIGHT_GRAY,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -97,7 +124,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         borderTopEndRadius: 8,
         borderBottomStartRadius: 8,
-        borderColor: COLOR_EQUA_RED,
+        borderColor: COLOR_ORANGE,
         borderWidth: 0.6,
 
 
@@ -109,7 +136,7 @@ const styles = StyleSheet.create({
         left: 0,
         Top: 0,
         zIndex: 1,
-        backgroundColor: COLOR_LIGHT_RED
+        backgroundColor: COLOR_ORANGE
     },
     corner_view_bottom: {
         position: 'absolute',
@@ -118,20 +145,28 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
         zIndex: 1,
-        backgroundColor: COLOR_LIGHT_RED
+        backgroundColor: COLOR_ORANGE
     },
     contactUs: {
         width: 70,
         height: 70,
         borderRadius: 100,
-        backgroundColor: COLOR_REDISH,
+        backgroundColor: COLOR_ORANGE,
         alignItems: 'center',
         justifyContent: 'center',
         position: 'absolute',
         right: 0,
         bottom: 0,
         marginEnd: 20,
-        marginBottom: 20
+        marginBottom: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 2,
+        elevation: 5,
     },
     imgContainer: {
         display: 'flex',

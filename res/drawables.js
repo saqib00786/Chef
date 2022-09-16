@@ -6,8 +6,7 @@ export const CONTACTUS_ICON = require('../assets/contact_us.png')
 export const SPLASHSCR_ICON = require('../assets/Splash_Screen_icon.png')
 
 
-export const COLOR_REDISH = "#c64832"
-export const COLOR_DARK_BROWN = "#683e38"
-export const COLOR_EQUA_RED = "#ffa090"
-export const COLOR_LIGHT_RED = "#ff7861"
-export const COLOR_EQUA_LIGHT_RED = "#ffe4df"
+export const COLOR_DarkGray = "#1f1f1f"
+export const COLOR_LIGHT_GRAY= "#252527"
+export const COLOR_ORANGE = "#fcc71a"
+export const COLOR_WHITE = "#ffffff"
