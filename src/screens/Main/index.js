@@ -55,6 +55,7 @@ const Main = (props) => {
                         showsVerticalScrollIndicator={false}
                         //horizontal = {true}
                         numColumns={2}
+                        initialNumToRender={8}
                         data={data}
                         renderItem={({ item }) => {
                             return (

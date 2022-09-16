@@ -4,12 +4,12 @@ import { useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font'
 import { COLOR_DarkGray, COLOR_ORANGE, FONT_ACUMIN, FONT_ACUMIN_BOLD, FONT_SACRAMENTO, SPLASHSCR_ICON } from '../../../res/drawables'
-import AnimatedLottieView from 'lottie-react-native';
+
 
 const Splash = (props) => {
 
     setTimeout(() => {
-        props.navigation.navigate('Main')
+        props.navigation.replace('Main')
     }, 3000)
 
     const [fontsLoaded] = useFonts({
@@ -37,12 +37,6 @@ const Splash = (props) => {
                     <Image
                         source={SPLASHSCR_ICON}
                         style={{ width: 150, height: 200, resizeMode: "contain" }}
-                    />
-                    <AnimatedLottieView
-                        style={{ width: 300, height: 300, position: 'absolute', zIndex: -1 }}
-                        source={require('../../../assets/bgAnim.json')}
-                        autoPlay
-                        loop
                     />
                 </View>
 

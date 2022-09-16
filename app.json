@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "AdTesting",
+    "name": "Chef",
     "slug": "AdTesting",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/Splash_Screen_icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -41,6 +41,6 @@
     }
   },
   "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-1551557160405536~9893430918"
+    "android_app_id": "ca-app-pub-1551557160405536~4795412244ca-app-pub-1551557160405536~4795412244"
   }
 }
