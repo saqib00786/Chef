@@ -83,7 +83,7 @@ const Detail = (props) => {
 
                 <View style={{ width: '100%', height: 70, position: 'absolute', bottom: 0, zIndex: -1 }}>
                     <BannerAd
-                        unitId={TestIds.BANNER}
+                        unitId='ca-app-pub-7992663111948996/8668892853'
                         size={BannerAdSize.FULL_BANNER}
                     />
                 </View>

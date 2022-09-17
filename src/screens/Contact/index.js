@@ -37,7 +37,7 @@ const Contact = () => {
             </View>
             <View style={{ width : '100%',height : 70,position: 'absolute', bottom: 0 }}>
                 <BannerAd
-                    unitId={TestIds.BANNER}
+                    unitId='ca-app-pub-7992663111948996/6881415885'
                     size={BannerAdSize.FULL_BANNER}
                 />
             </View>

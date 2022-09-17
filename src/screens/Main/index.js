@@ -92,7 +92,7 @@ const Main = (props) => {
                     />
                     <View style={{ width: '100%', height: 60, position: 'absolute', bottom: 0, zIndex: 1 }}>
                         <BannerAd
-                            unitId={TestIds.BANNER}
+                            unitId='ca-app-pub-7992663111948996/5372893090'
                             size={BannerAdSize.FULL_BANNER}
                         />
                     </View>
